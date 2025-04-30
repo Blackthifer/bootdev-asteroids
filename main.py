@@ -1,4 +1,5 @@
-import pygame
+import pygame as pg
+from constants import *
 
 def main():
     print("Starting Asteroids!")
