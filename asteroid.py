@@ -1,6 +1,6 @@
 import pygame as pg
 from circleshape import CircleShape
-from constants import ASTEROID_KINDS, ASTEROID_MAX_RADIUS, ASTEROID_MIN_RADIUS, ASTEROID_SPAWN_RATE, SCREEN_WIDTH, SCREEN_HEIGHT
+from constants import *
 
 class Asteroid(CircleShape):
     def __init__(self, pos_x, pos_y, vel_x, vel_y, radius):

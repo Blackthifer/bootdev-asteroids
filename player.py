@@ -1,6 +1,6 @@
 import pygame as pg
 from circleshape import CircleShape
-from constants import PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_ACCELERATION, PLAYER_DECELERATION, SCREEN_HEIGHT, SCREEN_WIDTH
+from constants import *
 
 class Player(CircleShape):
     def __init__(self, x, y):

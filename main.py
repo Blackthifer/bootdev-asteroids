@@ -2,7 +2,8 @@ import pygame as pg
 import random as rand
 from player import Player
 from asteroid import Asteroid
-from constants import SCREEN_HEIGHT, SCREEN_WIDTH, FRAMES_PER_SECOND
+from asteroidfield import AsteroidField
+from constants import *
 
 def main():
     print("Starting Asteroids!")
@@ -17,15 +18,10 @@ def main():
     drawable = pg.sprite.Group()
     Player.containers = (updatable, drawable)
     Asteroid.containers = (updatable, drawable)
+    AsteroidField.containers = (updatable)
 
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
-    asteroids = []
-    for i in range(3):
-        asteroids.append(Asteroid(rand.randrange(-60, SCREEN_WIDTH + 60),
-                                  rand.randrange(-60, SCREEN_HEIGHT + 60),
-                                  rand.randrange(-50, 50),
-                                  rand.randrange(-50, 50),
-                                  rand.randrange(20, 60)))
+    spawner = AsteroidField()
 
     while True:
         for event in pg.event.get():
