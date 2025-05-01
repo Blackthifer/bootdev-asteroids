@@ -1,6 +1,6 @@
 import pygame as pg
 from circleshape import CircleShape
-from constants import PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_ACCELERATION, PLAYER_DECELERATION
+from constants import PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_ACCELERATION, PLAYER_DECELERATION, SCREEN_HEIGHT, SCREEN_WIDTH
 
 class Player(CircleShape):
     def __init__(self, x, y):
@@ -29,7 +29,18 @@ class Player(CircleShape):
     def update(self, dt):
         self.handle_input(dt)
         self.position += self.velocity
+        self.screenwrap()
         self.velocity *= PLAYER_DECELERATION
+
+    def screenwrap(self):
+        if self.position.x <= -PLAYER_RADIUS:
+            self.position.x = SCREEN_WIDTH + PLAYER_RADIUS
+        elif self.position.x >= SCREEN_WIDTH + PLAYER_RADIUS:
+            self.position.x = -PLAYER_RADIUS
+        if self.position.y <= -PLAYER_RADIUS:
+            self.position.y = SCREEN_HEIGHT + PLAYER_RADIUS
+        elif self.position.y >= SCREEN_HEIGHT + PLAYER_RADIUS:
+            self.position.y = -PLAYER_RADIUS
     
     def handle_input(self, dt):
         pressed = pg.key.get_pressed()
