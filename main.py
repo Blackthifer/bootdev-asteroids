@@ -7,6 +7,7 @@ def main():
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
     pg.init()
+    pg.key.set_repeat(16)
     screen = pg.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
     fps_timer = pg.time.Clock()
     dt = 0
@@ -17,11 +18,20 @@ def main():
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 return
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_ESCAPE:
+                    return
+                handle_input(player, dt, event)
         screen.fill("black")
         player.draw(screen)
         pg.display.flip()
         dt = fps_timer.tick(FRAMES_PER_SECOND) / 1000
 
+def handle_input(player, dt, event):
+    if event.key == pg.K_d or event.key == pg.K_RIGHT:
+        player.rotate(dt, 1)
+    if event.key == pg.K_a or event.key == pg.K_LEFT:
+        player.rotate(dt, -1)
 
 if __name__ == "__main__":
     main()
