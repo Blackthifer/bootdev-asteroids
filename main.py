@@ -14,10 +14,11 @@ def main():
     fps_timer = pg.time.Clock()
     dt = 0
     rand.seed()
+    asteroids = pg.sprite.Group()
     updatable = pg.sprite.Group()
     drawable = pg.sprite.Group()
     Player.containers = (updatable, drawable)
-    Asteroid.containers = (updatable, drawable)
+    Asteroid.containers = (asteroids, updatable, drawable)
     AsteroidField.containers = (updatable)
 
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
@@ -31,6 +32,10 @@ def main():
                 if event.key == pg.K_ESCAPE:
                     return
         updatable.update(dt)
+        for object in asteroids:
+            if player.detect_collision(object):
+                print("Game Over!")
+                return
         screen.fill("black")
         for sprite in drawable:
             sprite.draw(screen)

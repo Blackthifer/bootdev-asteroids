@@ -16,3 +16,7 @@ class CircleShape(pg.sprite.Sprite):
 
     def update(self, dt):
         pass
+
+    def detect_collision(self, other):
+        distance = (self.position - other.position).length()
+        return distance <= self.radius + other.radius
