@@ -13,25 +13,21 @@ def main():
     dt = 0
 
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+    update_objects = [player]
 
     while True:
+        for object in update_objects:
+            object.update(dt)
+        screen.fill("black")
+        player.draw(screen)
+        pg.display.flip()
+        dt = fps_timer.tick(FRAMES_PER_SECOND) / 1000
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 return
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
                     return
-                handle_input(player, dt, event)
-        screen.fill("black")
-        player.draw(screen)
-        pg.display.flip()
-        dt = fps_timer.tick(FRAMES_PER_SECOND) / 1000
-
-def handle_input(player, dt, event):
-    if event.key == pg.K_d or event.key == pg.K_RIGHT:
-        player.rotate(dt, 1)
-    if event.key == pg.K_a or event.key == pg.K_LEFT:
-        player.rotate(dt, -1)
 
 if __name__ == "__main__":
     main()

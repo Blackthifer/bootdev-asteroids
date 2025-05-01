@@ -1,6 +1,6 @@
 import pygame as pg
 from circleshape import CircleShape
-from constants import PLAYER_RADIUS, PLAYER_TURN_SPEED
+from constants import PLAYER_RADIUS, PLAYER_TURN_SPEED, PLAYER_ACCELERATION, PLAYER_DECELERATION
 
 class Player(CircleShape):
     def __init__(self, x, y):
@@ -22,5 +22,22 @@ class Player(CircleShape):
         #direction should be 1 or -1
         self.rotation += PLAYER_TURN_SPEED * dt * direction
 
+    def accelerate(self, dt, forward = 1):
+        #forward should be 1 or -1
+        self.velocity += pg.Vector2(0,1).rotate(self.rotation) * PLAYER_ACCELERATION * dt * forward
+
     def update(self, dt):
-        pass
+        self.handle_input(dt)
+        self.position += self.velocity
+        self.velocity *= PLAYER_DECELERATION
+    
+    def handle_input(self, dt):
+        pressed = pg.key.get_pressed()
+        if pressed[pg.K_d] or pressed[pg.K_RIGHT]:
+            self.rotate(dt, 1)
+        if pressed[pg.K_a] or pressed[pg.K_LEFT]:
+            self.rotate(dt, -1)
+        if pressed[pg.K_w] or pressed[pg.K_UP]:
+            self.accelerate(dt, 1)
+        if pressed[pg.K_s] or pressed[pg.K_DOWN]:
+            self.accelerate(dt, -1)
