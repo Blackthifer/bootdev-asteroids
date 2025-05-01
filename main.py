@@ -1,5 +1,7 @@
 import pygame as pg
+import random as rand
 from player import Player
+from asteroid import Asteroid
 from constants import SCREEN_HEIGHT, SCREEN_WIDTH, FRAMES_PER_SECOND
 
 def main():
@@ -10,11 +12,20 @@ def main():
     screen = pg.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
     fps_timer = pg.time.Clock()
     dt = 0
+    rand.seed()
     updatable = pg.sprite.Group()
     drawable = pg.sprite.Group()
     Player.containers = (updatable, drawable)
+    Asteroid.containers = (updatable, drawable)
 
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+    asteroids = []
+    for i in range(3):
+        asteroids.append(Asteroid(rand.randrange(-60, SCREEN_WIDTH + 60),
+                                  rand.randrange(-60, SCREEN_HEIGHT + 60),
+                                  rand.randrange(-50, 50),
+                                  rand.randrange(-50, 50),
+                                  rand.randrange(20, 60)))
 
     while True:
         for event in pg.event.get():

@@ -33,14 +33,14 @@ class Player(CircleShape):
         self.velocity *= PLAYER_DECELERATION
 
     def screenwrap(self):
-        if self.position.x <= -PLAYER_RADIUS:
-            self.position.x = SCREEN_WIDTH + PLAYER_RADIUS
-        elif self.position.x >= SCREEN_WIDTH + PLAYER_RADIUS:
-            self.position.x = -PLAYER_RADIUS
-        if self.position.y <= -PLAYER_RADIUS:
-            self.position.y = SCREEN_HEIGHT + PLAYER_RADIUS
-        elif self.position.y >= SCREEN_HEIGHT + PLAYER_RADIUS:
-            self.position.y = -PLAYER_RADIUS
+        if self.position.x <= -self.radius:
+            self.position.x = SCREEN_WIDTH + self.radius
+        elif self.position.x >= SCREEN_WIDTH + self.radius:
+            self.position.x = -self.radius
+        if self.position.y <= -self.radius:
+            self.position.y = SCREEN_HEIGHT + self.radius
+        elif self.position.y >= SCREEN_HEIGHT + self.radius:
+            self.position.y = -self.radius
     
     def handle_input(self, dt):
         pressed = pg.key.get_pressed()
