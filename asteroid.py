@@ -1,4 +1,5 @@
 import pygame as pg
+import random as rand
 from circleshape import CircleShape
 from constants import *
 
@@ -16,13 +17,13 @@ class Asteroid(CircleShape):
 
     def split(self, shot_rotation):
         if self.radius > ASTEROID_MIN_RADIUS:
-            vel1 = pg.Vector2(0,1).rotate(shot_rotation + 90) * self.velocity.length()
-            vel2 = vel1.rotate(180)
+            angle_deviation = rand.uniform(40, 90)
+            vel1 = self.velocity.rotate(angle_deviation) * ASTEROID_SPLIT_SPEED_MULT
+            vel2 = self.velocity.rotate(-angle_deviation) * ASTEROID_SPLIT_SPEED_MULT
             new_radius = self.radius // 2
             Asteroid(self.position.x, self.position.y, vel1.x, vel1.y, new_radius)
             Asteroid(self.position.x, self.position.y, vel2.x, vel2.y, new_radius)
-        for group in self.containers:
-            group.remove(self)
+        self.kill()
             
 
     def screenwrap(self):

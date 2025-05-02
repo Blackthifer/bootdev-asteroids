@@ -42,7 +42,7 @@ def main():
             for bullet in shots:
                 if bullet.detect_collision(asteroid):
                     asteroid.split(bullet.rotation)
-                    bullet.destroy()
+                    bullet.kill()
         screen.fill("black")
         for sprite in drawable:
             sprite.draw(screen)

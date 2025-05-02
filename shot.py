@@ -14,8 +14,4 @@ class Shot(CircleShape):
     def update(self, dt):
         self.position += self.velocity * dt
         if self.position.y < -self.radius or self.position.y >= SCREEN_HEIGHT + self.radius or self.position.x < -self.radius or self.position.x > SCREEN_WIDTH + self.radius:
-            self.destroy()
-
-    def destroy(self):
-        for group in self.containers:
-            group.remove(self)
+            self.kill()
