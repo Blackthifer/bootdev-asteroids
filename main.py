@@ -1,6 +1,7 @@
 import pygame as pg
 import random as rand
 from player import Player
+from shot import Shot
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from constants import *
@@ -15,14 +16,16 @@ def main():
     dt = 0
     rand.seed()
     asteroids = pg.sprite.Group()
+    shots = pg.sprite.Group()
     updatable = pg.sprite.Group()
     drawable = pg.sprite.Group()
     Player.containers = (updatable, drawable)
+    Shot.containers = (shots, updatable, drawable)
     Asteroid.containers = (asteroids, updatable, drawable)
     AsteroidField.containers = (updatable)
 
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
-    spawner = AsteroidField()
+    AsteroidField()
 
     while True:
         for event in pg.event.get():

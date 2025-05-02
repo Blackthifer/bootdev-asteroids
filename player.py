@@ -1,5 +1,6 @@
 import pygame as pg
 from circleshape import CircleShape
+from shot import Shot
 from constants import *
 
 class Player(CircleShape):
@@ -32,6 +33,10 @@ class Player(CircleShape):
         self.screenwrap()
         self.velocity *= PLAYER_DECELERATION
 
+    def shoot(self):
+        shot_position = self.position + pg.Vector2(0,1).rotate(self.rotation) * PLAYER_RADIUS
+        Shot(shot_position.x, shot_position.y, self.rotation)
+
     def screenwrap(self):
         if self.position.x <= -self.radius:
             self.position.x = SCREEN_WIDTH + self.radius
@@ -52,3 +57,5 @@ class Player(CircleShape):
             self.accelerate(dt, 1)
         if pressed[pg.K_s] or pressed[pg.K_DOWN]:
             self.accelerate(dt, -1)
+        if pressed[pg.K_SPACE] or pressed[pg.K_j]:
+            self.shoot()
