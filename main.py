@@ -35,10 +35,14 @@ def main():
                 if event.key == pg.K_ESCAPE:
                     return
         updatable.update(dt)
-        for object in asteroids:
-            if player.detect_collision(object):
+        for asteroid in asteroids:
+            if player.detect_collision(asteroid):
                 print("Game Over!")
                 return
+            for bullet in shots:
+                if bullet.detect_collision(asteroid):
+                    asteroid.split(bullet.rotation)
+                    bullet.destroy()
         screen.fill("black")
         for sprite in drawable:
             sprite.draw(screen)

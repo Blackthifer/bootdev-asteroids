@@ -20,7 +20,6 @@ class AsteroidField(pg.sprite.Sprite):
     
     def update(self, dt):
         self.spawn_timer += dt
-        rand.seed()
         if self.spawn_timer >= ASTEROID_SPAWN_RATE:
             self.spawn_timer = 0
             

@@ -7,6 +7,7 @@ class Player(CircleShape):
     def __init__(self, x, y):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
+        self.shot_cooldown = 0
     
     def triangle(self):
         forward = pg.Vector2(0,1).rotate(self.rotation)
@@ -28,6 +29,7 @@ class Player(CircleShape):
         self.velocity += pg.Vector2(0,1).rotate(self.rotation) * PLAYER_ACCELERATION * dt * forward
 
     def update(self, dt):
+        self.shot_cooldown -= dt
         self.handle_input(dt)
         self.position += self.velocity
         self.screenwrap()
@@ -57,5 +59,6 @@ class Player(CircleShape):
             self.accelerate(dt, 1)
         if pressed[pg.K_s] or pressed[pg.K_DOWN]:
             self.accelerate(dt, -1)
-        if pressed[pg.K_SPACE] or pressed[pg.K_j]:
+        if (pressed[pg.K_SPACE] or pressed[pg.K_j]) and self.shot_cooldown <= 0:
+            self.shot_cooldown = SHOT_DELAY
             self.shoot()

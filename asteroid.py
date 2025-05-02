@@ -14,6 +14,17 @@ class Asteroid(CircleShape):
         self.position += self.velocity * dt
         self.screenwrap()
 
+    def split(self, shot_rotation):
+        if self.radius > ASTEROID_MIN_RADIUS:
+            vel1 = pg.Vector2(0,1).rotate(shot_rotation + 90) * self.velocity.length()
+            vel2 = vel1.rotate(180)
+            new_radius = self.radius // 2
+            Asteroid(self.position.x, self.position.y, vel1.x, vel1.y, new_radius)
+            Asteroid(self.position.x, self.position.y, vel2.x, vel2.y, new_radius)
+        for group in self.containers:
+            group.remove(self)
+            
+
     def screenwrap(self):
         if self.position.x <= -self.radius:
             self.position.x = SCREEN_WIDTH + self.radius
