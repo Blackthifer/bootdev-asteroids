@@ -14,6 +14,8 @@ def main():
     screen = pg.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
     fps_timer = pg.time.Clock()
     dt = 0
+    score = 0
+    score_render = pg.font.Font(size=50)
     rand.seed()
     asteroids = pg.sprite.Group()
     shots = pg.sprite.Group()
@@ -38,12 +40,15 @@ def main():
         for asteroid in asteroids:
             if player.detect_collision(asteroid):
                 print("Game Over!")
+                print(f"Final score: {score}")
                 return
             for bullet in shots:
                 if bullet.detect_collision(asteroid):
+                    score += asteroid.radius
                     asteroid.split(bullet.rotation)
                     bullet.kill()
         screen.fill("black")
+        screen.blit(score_render.render(f"Score: {score}", 0, "white"), (0, 0))
         for sprite in drawable:
             sprite.draw(screen)
         pg.display.flip()
